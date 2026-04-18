@@ -219,13 +219,13 @@ python generate_report.py
 
 ## Features
 
-✔ Event-driven architecture
-✔ Scalable Kafka messaging
-✔ Serverless orchestration
-✔ Retry & fault tolerance
-✔ Dead-letter queue handling
-✔ Idempotent processing
-✔ Monitoring with latency metrics
+* Event-driven architecture
+* Scalable Kafka messaging
+* Serverless orchestration
+* Retry & fault tolerance
+* Dead-letter queue handling
+* Idempotent processing
+* Monitoring with latency metrics
 
 
 ## Security Considerations
