@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# Build files
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/

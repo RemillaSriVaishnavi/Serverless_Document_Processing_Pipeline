@@ -1,0 +1,53 @@
+{
+  "Comment": "Claim Processing State Machine",
+  "StartAt": "VirusScan",
+  "States": {
+    "VirusScan": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:virusScan",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 2,
+          "BackoffRate": 1.2
+        }
+      ],
+      "Next": "OCRExtract"
+    },
+    "OCRExtract": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:ocrExtract",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 2,
+          "BackoffRate": 1.2
+        }
+      ],
+      "Next": "FraudDetection"
+    },
+    "FraudDetection": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.extractedText",
+          "StringMatches": "*fraud*",
+          "Next": "HumanReviewQueue"
+        }
+      ],
+      "Default": "FinalStore"
+    },
+    "HumanReviewQueue": {
+      "Type": "Wait",
+      "Seconds": 5,
+      "Next": "FinalStore"
+    },
+    "FinalStore": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:finalStore",
+      "End": true
+    }
+  }
+}

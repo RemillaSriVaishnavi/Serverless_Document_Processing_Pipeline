@@ -1,0 +1,18 @@
+services:
+  localstack:
+    image: localstack/localstack:2.3
+    container_name: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=lambda,stepfunctions,dynamodb,sns
+      - DEBUG=1
+      - AWS_DEFAULT_REGION=us-east-1
+      - LOCALSTACK_API_KEY=   # keep empty to force free mode
+    volumes:
+      - "C:/ProgramData/Docker/volumes:/var/lib/docker"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
